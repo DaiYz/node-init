@@ -2,7 +2,6 @@
 
 #### 项目开始
 ```
-    npm run dev
-    yarn dev
+    npm run dev OR yarn dev
  ```
    
