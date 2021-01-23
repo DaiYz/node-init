@@ -6,7 +6,18 @@ import router from './routes'
 
 const app = new Koa()
 
-app
+const createServer = () => {
+  return (
+    app
+  .use(Logger()) // 日志
+  .use(Body()) // FormBody 转换
+
+  .use(router.routes()) // 注册路由
+  .use(router.allowedMethods()) // 注册允许的请求方法 or 可忽略
+  )
+}
+
+/* app
   .use(Logger()) // 日志
   .use(Body()) // FormBody 转换
 
@@ -15,4 +26,11 @@ app
 
   .listen(CG.APP_PORT) // 监听的端口;
 
-console.log(`[${CG.APP_NAME}][http://localhost:${CG.APP_PORT}]`)
+console.log(`[${CG.APP_NAME}][http://localhost:${CG.APP_PORT}]`) */
+
+
+if(process.env.SERVERLESS) {
+  module.exports = createServer 
+} else {
+  createServer().listen(3000) 
+}
